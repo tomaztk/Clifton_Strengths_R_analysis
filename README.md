@@ -1,2 +1,2 @@
-# Clifton_Strengths_R_analysis
-Gallup Clifton Strengths Analysis and visualisation with R
+# Clifton Strengths R analysis
+Gallup Clifton Strengths Talent assessments Analysis and visualisation with R
