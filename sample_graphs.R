@@ -78,3 +78,55 @@ legend(
   text.col = "black", cex = 1, pt.cex = 1.5
 )
 par(op)
+
+
+
+
+### Sample 2
+cs<- data.frame (name  = c("tom", "tom", "tom", "tom", "tom", "anna","anna","anna","anna","anna"),
+                 order_cs = c(1,2,3,4,5, 1,2,3,4,5),
+                 team = c("A", "A", "A", "A", "A", "B", "B", "B", "B", "B"),
+                  cs = c("Learner", "Intellection", "Significance", "Maximizer", "Empathy",
+                         "Discipline","Futuristic","Communication","Achiever", "Learner"),
+                 col_cs = c("Green", "Green", "Orange", "Magenta", "Blue",
+                            "Magenta", "Green", "Orange", "Magenta", "Green")
+)
+
+cs
+
+# Visualising
+# install.packages("waffle")
+library(waffle)
+library(ggplot2)
+
+parts <- c(1, 1, 1, 1, 1)
+chart <- waffle(parts, rows=1)
+chart
+
+
+library(readr)
+#  devtools::install_github("liamgilbey/ggwaffle")
+# install.packages("waffle", "readr", "ggpubr")
+
+library(ggwaffle)
+library(ggpubr)
+library(ggimage)
+theme_set(theme_pubr())
+
+link <- ("https://raw.githubusercontent.com/brennanpincardiff/RforBiochemists/master/data/ggwaffledata_mf.csv")
+bacon_waf <- read_csv(link)
+
+# have a look at data
+View(bacon_waf)
+
+# basic plot with geom_waffle() from ggwaffle package
+ggplot(bacon_waf, aes(x, y, fill = bacon)) + 
+  geom_waffle()
+
+
+install.packages("personograph")
+library(personograph)
+data <- list(first=0.06, second=0.94)
+personograph(data,  colors=list(first="black", second="#efefef"),
+             fig.title = "100 people who do not eat bacon",
+             draw.legend = FALSE, dimensions=c(5,20))
