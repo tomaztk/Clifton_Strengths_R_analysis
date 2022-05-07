@@ -130,3 +130,37 @@ data <- list(first=0.06, second=0.94)
 personograph(data,  colors=list(first="black", second="#efefef"),
              fig.title = "100 people who do not eat bacon",
              draw.legend = FALSE, dimensions=c(5,20))
+
+
+### Testing visualization
+
+# install.packages("GGally")
+
+library(GGally)
+
+# Data set is provided by R natively
+data <- iris
+
+# Plot
+ggparcoord(data,
+           columns = 1:4, groupColumn = 5
+) 
+
+
+# cs transpose
+
+cs2 <- cs[,c(1,4)]
+cs2_t <- cs2 %>% mutate(value = 1)  %>% spread(cs, value,  fill = 0 ) 
+
+ggparcoord(cs2_t,
+           columns = 2:10, groupColumn = 1
+) 
+
+
+cs3 <- cs[, c(1,2,4)]
+
+cs3_t <- cs3 %>% mutate(value = 1)  %>% spread(cs, order_cs,  fill = 0) 
+cs3_t <- cs3_t[, c(1,3:11)]
+
+ggparcoord(cs3_t,
+           columns = 2:10, groupColumn = 1) 
