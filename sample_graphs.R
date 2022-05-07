@@ -134,33 +134,51 @@ personograph(data,  colors=list(first="black", second="#efefef"),
 
 ### Testing visualization
 
-# install.packages("GGally")
+cs<- data.frame (name  = c("tom", "tom", "tom", "tom", "tom", "anna","anna","anna","anna","anna",
+                           "Sara","Sara","Sara","Sara","Sara","bill","bill","bill","bill","bill"),
+                 order_cs = c(1,2,3,4,5, 1,2,3,4,5, 1,2,3,4,5, 1,2,3,4,5),
+                 team = c("A", "A", "A", "A", "A", "B", "B", "B", "B", "B",
+                          "A", "A", "A", "A", "A", "B", "B", "B", "B", "B"),
+                 cs = c("Learner", "Intellection", "Significance", "Maximizer", "Empathy",
+                        "Significance","Empathy","Maximizer","Intellection", "Learner",
+                        "Significance","Maximizer","Empathy","Learner", "Intellection",
+                        "Maximizer","Empathy","Significance","Intellection", "Learner"),
+                 
+                 col_cs = c("Green", "Green", "Orange", "Magenta", "Blue",
+                            "Orange", "Blue", "Magenta", "Green", "Green",
+                            "Orange", "Magenta", "Blue", "Green", "Green",
+                            "Magenta", "Blue", "Orange", "Green", "Green")
+                 
+)
 
+cs
+
+# install.packages("GGally")
 library(GGally)
 
-# Data set is provided by R natively
-data <- iris
-
-# Plot
-ggparcoord(data,
-           columns = 1:4, groupColumn = 5
-) 
-
-
 # cs transpose
-
 cs2 <- cs[,c(1,4)]
+
 cs2_t <- cs2 %>% mutate(value = 1)  %>% spread(cs, value,  fill = 0 ) 
 
 ggparcoord(cs2_t,
-           columns = 2:10, groupColumn = 1
+           columns = 2:6, groupColumn = 1
 ) 
 
 
-cs3 <- cs[, c(1,2,4)]
+cs3 <- cs[, c(1,2,3,4)]
 
-cs3_t <- cs3 %>% mutate(value = 1)  %>% spread(cs, order_cs,  fill = 0) 
-cs3_t <- cs3_t[, c(1,3:11)]
+cs3_t <- cs3 %>% mutate(value = 1, team)  %>% spread(cs, order_cs,  fill = 0) 
+cs3_t <- cs3_t[, c(1:2,4:8)]
 
-ggparcoord(cs3_t,
-           columns = 2:10, groupColumn = 1) 
+p <- ggparcoord(cs3_t, columns = 3:7, 
+           groupColumn = 1, 
+           alphaLines = 0.2,
+           scale = "globalminmax",
+          # boxplot = TRUE,
+           splineFactor = TRUE,
+          #groupColumn = "team"
+) +   facet_wrap(~ team)
+
+
+p + theme_minimal()
