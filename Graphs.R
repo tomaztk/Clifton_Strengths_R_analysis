@@ -4,6 +4,23 @@
 #########################
 library(ggplot2)
 
+
+clif_stren <- data.frame(
+             r_n = c(1:34),
+             clif = c('Analytical','Context','Futuristic','Ideation','Input','Intellection','Learner','Strategic',
+                      'Adaptability','Connectedness','Developer','Empathy','Harmony','Includer','Individualization','Positivity','Relator',
+                      'Activator','Command','Communication','Competition','Maximizer','Self-Assurance','Significance','Woo',
+                      'Achiever','Arranger','Belief','Consistency','Deliberative','Discipline','Focus','Responsibility','Restorative'
+             ),
+             theme = c(rep('STRATEGIC THINKING', times=8), rep('RELATIONSHIP BUILDING', times=9), rep('INFLUENCING', times=8), rep('EXECUTING', times=9)),
+             color = c(rep('green',times=8), rep('blue', times=9), rep('orange', times=8),rep('magenta', times=9))
+)
+
+
+
+
+
+
 # Colors
 cs_color <- data.frame(
     clif = c(1:35)
