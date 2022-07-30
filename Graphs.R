@@ -3,10 +3,12 @@
 ### Creating Sample data
 #########################
 library(ggplot2)
+library(magrittr)
+library(tidyverse)
 
-
+# master data
 clif_stren <- data.frame(
-             r_n = c(1:34),
+             clif_id = c(1:34),
              clif = c('Analytical','Context','Futuristic','Ideation','Input','Intellection','Learner','Strategic',
                       'Adaptability','Connectedness','Developer','Empathy','Harmony','Includer','Individualization','Positivity','Relator',
                       'Activator','Command','Communication','Competition','Maximizer','Self-Assurance','Significance','Woo',
@@ -15,6 +17,48 @@ clif_stren <- data.frame(
              theme = c(rep('STRATEGIC THINKING', times=8), rep('RELATIONSHIP BUILDING', times=9), rep('INFLUENCING', times=8), rep('EXECUTING', times=9)),
              color = c(rep('green',times=8), rep('blue', times=9), rep('orange', times=8),rep('magenta', times=9))
 )
+
+# transactional data
+clif_data <- data.frame(
+      per = rep(1:5, each=34),
+      order = c(rep(1:34, each=1), rep(1:34, each=1), rep(1:34, each=1), rep(1:34, each=1), rep(1:34, each=1)),
+      clif_id = c(sample(34, replace=FALSE),sample(34, replace=FALSE),sample(34, replace=FALSE),sample(34, replace=FALSE),sample(34, replace=FALSE))
+      
+)
+
+#join data
+clif_data %<>% inner_join(clif_stren, by = "clif_id")
+
+
+
+#heatmap of the group
+ggplot(clif_data) +
+  aes(x = order, y = per, fill = color) +
+  geom_tile(size = 1.5) +
+  scale_fill_hue(direction = 1) +
+  theme_minimal()
+
+
+#order by people
+ggplot(clif_data) +
+  aes(x = per, y = order, size = clif) +
+  geom_point(shape = "circle", colour = "#112446") +
+  theme_minimal()
+
+
+
+ggplot(clif_data) +
+  aes(x = order, y = per, fill = col) +
+  geom_tile(size = 1.5) +
+  scale_fill_manual(
+    values = c(blue = "#0D0887",
+               green = "#06A51B",
+               Orange = "#CD8F38",
+               Purple = "#BD21CB",
+               Yellow = "#F0F921")
+  ) +
+  theme_minimal() +
+  theme(legend.position = "none")
 
 
 
